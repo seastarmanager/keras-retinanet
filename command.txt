@@ -1,0 +1,29 @@
+机器jupyter-notebook地址：
+http://188.131.137.43:10702/?token=37d17b9c0c05d94f42cc27a87f9536152675a2f49e6e0007
+
+训练coco
+keras_retinanet/bin/train.py --batch-size 4 --multi-gpu-force --multi-gpu 4 --gpu 0,1,2,3 --workers 8 --steps 200 \
+--weights ../resnet50_coco_best_v2.1.0.h5 \
+coco ../coco/
+
+keras_retinanet/bin/train.py --batch-size 4 --multi-gpu-force --multi-gpu 8 --workers 16 --steps 100 --epochs 1 \
+--weights ../resnet50_coco_best_v2.1.0.h5 \
+coco ../coco/
+
+
+评测coco
+keras_retinanet/bin/evaluate.py coco ../coco/ ../resnet50_coco_best_v2.1.0.h5
+
+
+ --val-annotations
+
+检查demo的csv合法性
+python keras-retinanet/bin/debug.py csv ../coco/CSV/demo_anno.csv ../coco/CSV/demo_class.csv
+
+训练demo的csv
+keras_retinanet/bin/train.py --steps 20 --weights ../resnet50_coco_best_v2.1.0.h5 \
+csv ../coco/CSV/demo_anno.csv ../coco/CSV/demo_class.csv
+
+评测demo的csv
+
+keras_retinanet/bin/evaluate.py csv ../coco/CSV/demo_anno.csv ../coco/CSV/demo_class.csv ./snapshots/resnet50_csv_50.h5
